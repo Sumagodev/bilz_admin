@@ -15,6 +15,7 @@ import OurTeam from "./screens/submenus/OurTeam";
 
 import News from "./screens/submenus/News";
 import News1 from "./screens/submenus/News1";
+import Special from "./screens/submenus/Special";
 
 import HeaderContact from "./screens/submenus/HeaderContact";
 import HeroForm from "./screens/submenus/HeroForm";
@@ -52,6 +53,7 @@ import Analysis from "./screens/submenus/Analysis";
 import Further_analysis from "./screens/submenus/Further_analysis";
 import ApplicationCategory from "./screens/submenus/ApplicationCategory";
 import PDF from "./screens/submenus/PDF";
+import Implemented from "./screens/submenus/Implemented";
 
 function App() {
   return (
@@ -97,6 +99,11 @@ function App() {
             path="/Further"
             element={<ProtectedRoutes Component={Further_analysis} />}
           />
+           <Route
+            path="/Special"
+            element={<ProtectedRoutes Component={Special} />}
+          />
+          
           
           <Route
             path="/leadership"
@@ -112,7 +119,7 @@ function App() {
           />
           
                   <Route
-            path="/events"
+            path="/solution"
             element={<ProtectedRoutes Component={Events} />}
           />
           <Route
@@ -164,7 +171,7 @@ function App() {
             element={<ProtectedRoutes Component={Office} />}
           />
           <Route
-            path="/contactsalesperson"
+            path="/contactperson"
             element={<ProtectedRoutes Component={ContactSalesPerson} />}
           />
              <Route
@@ -179,6 +186,11 @@ function App() {
             path="/getintouch"
             element={<ProtectedRoutes Component={GetInTouch} />}
           />
+           <Route
+            path="/implemented"
+            element={<ProtectedRoutes Component={Implemented} />}
+          />
+          
           <Route
             path="/requestcallbackform"
             element={<ProtectedRoutes Component={RequestCallbackForm} />}

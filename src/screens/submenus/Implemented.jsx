@@ -1,6 +1,7 @@
 
 
 
+
 ////sos final
 import React, { useState, useEffect } from "react";
 import {
@@ -26,10 +27,11 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { ThreeDots  } from 'react-loader-spinner'; 
 import { Tooltip, OverlayTrigger,  } from 'react-bootstrap';
 import "../../App.scss";
-const OurTeam = () => {
+const Implemented = () => {
+  // const {  setData, filteredData } =
+  //   useSearchExport();
   const { searchQuery, handleSearch, handleExport, setData, filteredData } =
     useSearchExport();
-
   const [team, setTeam] = useState([]);
   const [errors, setErrors] = useState({});
   const [editMode, setEditMode] = useState(false);
@@ -55,25 +57,20 @@ const OurTeam = () => {
       selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1,
     },
 
-
     {
-      name: <CustomHeader name="Name" />,
-      cell: (row) => <span>{row.name}</span>,
+      name: <CustomHeader name="Title" />,
+      cell: (row) => <span>{row.title}</span>,
     },
     {
       name: <CustomHeader name="Description" />,
-      cell: (row) => <span>{row.company_Name}</span>,
-    },
-    {
-      name: <CustomHeader name="Review" />,
-      cell: (row) => <span>{row.review}</span>,
+      cell: (row) => <span>{row.desc}</span>,
     },
     {
       name: <CustomHeader name="Image" />,
       cell: (row) => (
         <img
           src={row.img}
-          alt="OurTeam"
+          alt="Infrastructure"
           style={{ width: "100px", height: "auto" }}
         />
       ),
@@ -156,7 +153,7 @@ const OurTeam = () => {
     setLoading(true);
     const accessToken = localStorage.getItem("accessToken"); // Retrieve access token
     try {
-      const response = await instance.get("testimonial/find", {
+      const response = await instance.get("implemented/find", {
         headers: {
           Authorization: "Bearer " + accessToken,
           "Content-Type": "application/json",
@@ -180,30 +177,31 @@ const OurTeam = () => {
     let isValid = true;
 
     if (!formData.img) {
-      errors.img = "Image is required with 443x435 pixels";
+      errors.img = "Image is not 338x220 pixels";
       isValid = false;
-    } else if (formData.img instanceof File && !validateImageSize(formData.img)) {
-      errors.img = "Image is not 443x435 pixels";
+    
+    } else if (
+      formData.img instanceof File &&
+      !validateImageSize(formData.img)
+    ) {
+      errors.img = "Image is required with 338x220 pixels";
+      isValid = false;
+    }
+    if (!formData.title?.trim()) {
+      errors.title = "Title is required";
       isValid = false;
     }
 
+    if (!formData.desc?.trim()) {
+      errors.desc = "Description is required";
+      isValid = false;
+    } 
+    // else if (formData.desc.length > 1000) {
+    //   errors.desc = "Description must be 1000 characters or less";
+    //   isValid = false;
+    // }
 
-    if (!formData.name?.trim()) {
-      errors.name = "Name is required";
-      isValid = false;
-    }
-
-    if (!formData.company_Name?.trim()) {
-      errors.company_Name = "company_Name is required";
-      isValid = false;
-    }
-    if (!formData.review?.trim()) {
-      errors.review = "review is required";
-      isValid = false;
-    }
-   
     setErrors(errors);
-
     return isValid;
   };
 
@@ -211,16 +209,18 @@ const OurTeam = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width === 443 && img.height === 435) {
+        if (img.width === 338 && img.height === 220) {
           resolve();
         } else {
-          reject("Image must be 443x435 pixels");
+          reject("Image is required with 338x220 pixels");
         }
       };
       img.onerror = () => reject("Error loading image");
       img.src = URL.createObjectURL(file);
     });
   };
+
+  
 
   const handleChange = async (name, value) => {
     if (name === "img" && value instanceof File) {
@@ -233,9 +233,13 @@ const OurTeam = () => {
         setImagePreview("");
       }
     } else {
-      setFormData({ ...formData, [name]: value });
+      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
     }
   };
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -249,7 +253,7 @@ const OurTeam = () => {
 
       try {
         if (editMode) {
-          await instance.put(`testimonial/update/${editingId}`, data, {
+          await instance.put(`implemented/update/${editingId}`, data, {
             headers: {
               Authorization: "Bearer " + accessToken,
               "Content-Type": "multipart/form-data",
@@ -261,7 +265,7 @@ const OurTeam = () => {
           );
           setTeam(updatedTeam);
         } else {
-          await instance.post("testimonial/add", data, {
+          await instance.post("implemented/add", data, {
             headers: {
               Authorization: "Bearer " + accessToken,
               "Content-Type": "multipart/form-data",
@@ -315,7 +319,7 @@ const OurTeam = () => {
                 setLoading(true);
                 const accessToken = localStorage.getItem("accessToken");
                 try {
-                  await instance.delete(`testimonial/isdelete/${id}`, {
+                  await instance.delete(`implemented/isdelete/${id}`, {
                     headers: {
                       Authorization: `Bearer ${accessToken}`,
                       "Content-Type": "application/json",
@@ -377,7 +381,7 @@ const OurTeam = () => {
                 const accessToken = localStorage.getItem("accessToken");
                 try {
                   await instance.put(
-                    `testimonial/isactive/${id}`,
+                    `implemented/isactive/${id}`,
                     { isVisible },
                     {
                       headers: {
@@ -446,11 +450,11 @@ const OurTeam = () => {
               {showTable ? (
                 <Col className="d-flex justify-content-end align-items-center">
                 <SearchInput
-            searchQuery={searchQuery}
-            onSearch={handleSearch}
-            
-            showExportButton={false}
-          />
+              searchQuery={searchQuery}
+              onSearch={handleSearch}
+              onExport={handleExport}
+              showExportButton={false}
+            />
                   <Button
                     variant="outline-success"
                     onClick={handleAdd}
@@ -510,7 +514,7 @@ const OurTeam = () => {
             ) : (
               <Form onSubmit={handleSubmit}>
                 <Row>
-                <Col md={12}>
+                  <Col md={12}>
                     {imagePreview && (
                       <img
                         src={imagePreview}
@@ -523,51 +527,40 @@ const OurTeam = () => {
                       />
                     )}
                     <NewResuableForm
-                      label={"Upload Blog Image"}
+                      label={"Upload Infrastructure Image"}
                       placeholder={"Upload Image"}
                       name={"img"}
                       type={"file"}
                       onChange={handleChange}
                       initialData={formData}
                       error={errors.img}
-                      imageDimensiion="Image must be 443*435 pixels" 
-                    />
-                    </Col>
-                    <Col md={6}>
-                    <NewResuableForm
-                      label={"Name"}
-                      placeholder={"Enter Name"}
-                      name={"name"}
-                      type={"text"}
-                      onChange={handleChange}
-                      initialData={formData}
-                      error={errors.name}
+                      imageDimensiion="Image must be 338x220 pixels"
                     />
                   </Col>
                   <Col md={6}>
                     <NewResuableForm
-                      label={"Company_Name "}
-                      placeholder={"Enter Company_Name"}
-                      name={"company_Name"}
-                      type={"text"}
+                      label="Title"
+                      placeholder="Enter Title"
+                      name="title"
+                      type="text"
                       onChange={handleChange}
                       initialData={formData}
-                      error={errors.company_Name}
+                      error={errors.title}
                     />
                   </Col>
                   <Col md={6}>
                     <NewResuableForm
-                      label={"Review "}
-                      placeholder={"Enter Review "}
-                      name={"review"}
-                      type={"text"}
+                      label="Description"
+                      placeholder="Enter description"
+                      name="desc"
+                      type="text"
                       onChange={handleChange}
                       initialData={formData}
                       textarea
-                      error={errors.review}
+                      error={errors.desc}
+                      // charLimit={1000}
                     />
                   </Col>
-                 
                 </Row>
                 <Row>
                   <div className="mt-3 d-flex justify-content-end">
@@ -589,4 +582,4 @@ const OurTeam = () => {
   );
 };
 
-export default OurTeam;
+export default Implemented;

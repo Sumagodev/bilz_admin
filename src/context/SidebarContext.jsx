@@ -165,6 +165,7 @@ export const SidebarProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true); // Sidebar is open by default
   const [activeMenuName, setActiveMenuName] = useState("Header Contact"); // Default active menu
   const [activeSubMenu, setActiveSubMenu] = useState(""); // New state for active submenu
+  
   const location = useLocation();
 
   useEffect(() => {

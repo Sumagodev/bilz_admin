@@ -60,14 +60,8 @@ const OurTeam = () => {
       name: <CustomHeader name="Name" />,
       cell: (row) => <span>{row.name}</span>,
     },
-    {
-      name: <CustomHeader name="Description" />,
-      cell: (row) => <span>{row.company_Name}</span>,
-    },
-    {
-      name: <CustomHeader name="Review" />,
-      cell: (row) => <span>{row.review}</span>,
-    },
+   
+    
     {
       name: <CustomHeader name="Image" />,
       cell: (row) => (
@@ -156,7 +150,7 @@ const OurTeam = () => {
     setLoading(true);
     const accessToken = localStorage.getItem("accessToken"); // Retrieve access token
     try {
-      const response = await instance.get("testimonial/find", {
+      const response = await instance.get("Special/find", {
         headers: {
           Authorization: "Bearer " + accessToken,
           "Content-Type": "application/json",
@@ -193,14 +187,7 @@ const OurTeam = () => {
       isValid = false;
     }
 
-    if (!formData.company_Name?.trim()) {
-      errors.company_Name = "company_Name is required";
-      isValid = false;
-    }
-    if (!formData.review?.trim()) {
-      errors.review = "review is required";
-      isValid = false;
-    }
+
    
     setErrors(errors);
 
@@ -249,7 +236,7 @@ const OurTeam = () => {
 
       try {
         if (editMode) {
-          await instance.put(`testimonial/update/${editingId}`, data, {
+          await instance.put(`Special/update/${editingId}`, data, {
             headers: {
               Authorization: "Bearer " + accessToken,
               "Content-Type": "multipart/form-data",
@@ -261,7 +248,7 @@ const OurTeam = () => {
           );
           setTeam(updatedTeam);
         } else {
-          await instance.post("testimonial/add", data, {
+          await instance.post("Special/add", data, {
             headers: {
               Authorization: "Bearer " + accessToken,
               "Content-Type": "multipart/form-data",
@@ -315,7 +302,7 @@ const OurTeam = () => {
                 setLoading(true);
                 const accessToken = localStorage.getItem("accessToken");
                 try {
-                  await instance.delete(`testimonial/isdelete/${id}`, {
+                  await instance.delete(`Special/isdelete/${id}`, {
                     headers: {
                       Authorization: `Bearer ${accessToken}`,
                       "Content-Type": "application/json",
@@ -377,7 +364,7 @@ const OurTeam = () => {
                 const accessToken = localStorage.getItem("accessToken");
                 try {
                   await instance.put(
-                    `testimonial/isactive/${id}`,
+                    `Special/isactive/${id}`,
                     { isVisible },
                     {
                       headers: {
@@ -544,29 +531,7 @@ const OurTeam = () => {
                       error={errors.name}
                     />
                   </Col>
-                  <Col md={6}>
-                    <NewResuableForm
-                      label={"Company_Name "}
-                      placeholder={"Enter Company_Name"}
-                      name={"company_Name"}
-                      type={"text"}
-                      onChange={handleChange}
-                      initialData={formData}
-                      error={errors.company_Name}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <NewResuableForm
-                      label={"Review "}
-                      placeholder={"Enter Review "}
-                      name={"review"}
-                      type={"text"}
-                      onChange={handleChange}
-                      initialData={formData}
-                      textarea
-                      error={errors.review}
-                    />
-                  </Col>
+                 
                  
                 </Row>
                 <Row>
