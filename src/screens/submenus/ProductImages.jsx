@@ -30,7 +30,7 @@ const ServiceDetail = () => {
   const [errors, setErrors] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const [formData, setFormData] = useState({ title: "", desc: "" });
+  const [formData, setFormData] = useState({ title: "", description: "" });
   const [eyeVisibilityById, setEyeVisibilityById] = useState({});
   const [imagePreviews, setImagePreviews] = useState("");
   const [showTable, setShowTable] = useState(true);
@@ -56,11 +56,11 @@ const ServiceDetail = () => {
     },
     {
       name: <CustomHeader name="Description" />,
-      selector: (row) => row.desc,
+      selector: (row) => row.description,
     },
     {
       name: <CustomHeader name="Product Name" />,
-      cell: (row) => <span>{row.productName}</span>,
+      cell: (row) => <span>{row.pri}</span>,
     },
     {
       name: <CustomHeader name="Image" />,
@@ -169,16 +169,16 @@ const ServiceDetail = () => {
       errors.img = "Image is not 500x500 pixels";
       isValid = false;
     }
-    if (!formData.productName?.trim()) {
-      errors.productName = "Product Name is required";
+    if (!formData.productId?.trim()) {
+      errors.productId = "Product Name is required";
       isValid = false;
     }
     if (!formData.title?.trim()) {
       errors.title = "Title is required";
       isValid = false;
     }
-    if (!formData.desc?.trim()) {
-      errors.desc = "Description is required";
+    if (!formData.description?.trim()) {
+      errors.description = "Description is required";
       isValid = false;
     }
 
@@ -250,7 +250,7 @@ const ServiceDetail = () => {
         }
         fetchTeam();
         setEditMode(false);
-        setFormData({ title: "", desc: "" });
+        setFormData({ title: "", description: "" });
         setImagePreviews("");
         setShowTable(true);
       } catch (error) {
@@ -316,7 +316,7 @@ const ServiceDetail = () => {
   };
 
   const handleAdd = () => {
-    setFormData({ title: "", desc: "" });
+    setFormData({ title: "", description: "" });
     setEditMode(false);
     setShowTable(false);
   };
@@ -367,20 +367,20 @@ const ServiceDetail = () => {
                 <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col md={6}>
-                      <Form.Group controlId="productName">
+                      <Form.Group controlId="productId">
                         <Form.Label>Product Name</Form.Label>
                         <Form.Control
                           as="select"
-                          value={formData.productName || ""}
-                          onChange={(e) => handleChange("productName", e.target.value)}
-                          isInvalid={!!errors.productName}
+                          value={formData.productId || ""}
+                          onChange={(e) => handleChange("productId", e.target.value)}
+                          isInvalid={!!errors.productId}
                         >
                           <option value="">Select Product</option>
                           {products.map((product) => (
                             <option key={product.id} value={product.title}>{product.title}</option>
                           ))}
                         </Form.Control>
-                        <Form.Control.Feedback type="invalid">{errors.productName}</Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">{errors.productId}</Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                     <Col md={6}>
@@ -402,11 +402,11 @@ const ServiceDetail = () => {
                         <Form.Label>Description</Form.Label>
                         <Form.Control
                           type="text"
-                          value={formData.desc}
-                          onChange={(e) => handleChange("desc", e.target.value)}
-                          isInvalid={!!errors.desc}
+                          value={formData.description}
+                          onChange={(e) => handleChange("description", e.target.value)}
+                          isInvalid={!!errors.description}
                         />
-                        <Form.Control.Feedback type="invalid">{errors.desc}</Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                     <Col md={6}>

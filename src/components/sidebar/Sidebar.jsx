@@ -212,69 +212,69 @@ const SidebarMenu = [
         },
 
       ]},
-  {
-    menu: "Product",
-    url: "/product",
-    mainIcon: <FiList size={24} />,
-    subMenu: [
+  // {
+  //   menu: "Product",
+  //   url: "/product",
+  //   mainIcon: <FiList size={24} />,
+  //   subMenu: [
       
-      {
-        subMenus: "Product Name",
-        url: "/productname",
-        icon: <IoIosOptions style={{ color: "red" }} size={24} />,
-      },
+  //     {
+  //       subMenus: "Product Name",
+  //       url: "/productname",
+  //       icon: <IoIosOptions style={{ color: "red" }} size={24} />,
+  //     },
 
 
-      {
-        subMenus: "Product Details",
-        url: "/productdetails",
-        icon: <IoIosOptions style={{ color: "red" }} size={24} />,
-      },
+  //     {
+  //       subMenus: "Product Details",
+  //       url: "/productdetails",
+  //       icon: <IoIosOptions style={{ color: "red" }} size={24} />,
+  //     },
     
-      {
-        subMenus: "Models",
-        url: "/technicaldata",
-        icon: <FiFileText style={{ color: "red" }} size={24} />,
-      },
-      {
-        subMenus: "Accessories & Optional",
-        url: "/optionsdata",
-        icon: <IoIosOptions style={{ color: "red" }} size={24} />,
-      },
-      // {
-      //   subMenus: "Material Data",
-      //   url: "/materialdata",
-      //   icon: <RiFileListLine style={{ color: "red" }} size={24} />,
-      // },
-      {
-        subMenus: "Application Data",
-        url: "/applicationdata",
-        icon: <RiFileListLine style={{ color: "red" }} size={24} />,
-      },
-    ],
-  },
-  {
-    menu: "Blog",
-    url: "/blog",
-    mainIcon: <FaRegNewspaper size={24} />,
-    subMenu: [
-      {
-        subMenus: "Blog Details",
-        url: "/blogdetails",
-        icon: <FaRegNewspaper style={{ color: "red" }} size={24} />,
-      },
-    ],
-  },
-  {
-    menu: "News and Event",
-    url: "/newsandevent",
-    mainIcon: <BsNewspaper size={24} />,
-    subMenu: [
-      {
-        subMenus: "News",
-        url: "/news",
-        icon: <BsNewspaper style={{ color: "red" }} size={24} />,
-      },
+  //     {
+  //       subMenus: "Models",
+  //       url: "/technicaldata",
+  //       icon: <FiFileText style={{ color: "red" }} size={24} />,
+  //     },
+  //     {
+  //       subMenus: "Accessories & Optional",
+  //       url: "/optionsdata",
+  //       icon: <IoIosOptions style={{ color: "red" }} size={24} />,
+  //     },
+  //     // {
+  //     //   subMenus: "Material Data",
+  //     //   url: "/materialdata",
+  //     //   icon: <RiFileListLine style={{ color: "red" }} size={24} />,
+  //     // },
+  //     {
+  //       subMenus: "Application Data",
+  //       url: "/applicationdata",
+  //       icon: <RiFileListLine style={{ color: "red" }} size={24} />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   menu: "Blog",
+  //   url: "/blog",
+  //   mainIcon: <FaRegNewspaper size={24} />,
+  //   subMenu: [
+  //     {
+  //       subMenus: "Blog Details",
+  //       url: "/blogdetails",
+  //       icon: <FaRegNewspaper style={{ color: "red" }} size={24} />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   menu: "News and Event",
+  //   url: "/newsandevent",
+  //   mainIcon: <BsNewspaper size={24} />,
+  //   subMenu: [
+  //     {
+  //       subMenus: "News",
+  //       url: "/news",
+  //       icon: <BsNewspaper style={{ color: "red" }} size={24} />,
+  //     },
     
 
      
@@ -283,8 +283,8 @@ const SidebarMenu = [
     
       
       
-    ],
-  },
+  //   ],
+  // },
   {
     menu: "Contact Us",
     url: "/contactus",

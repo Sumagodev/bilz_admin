@@ -62,7 +62,7 @@ const Login = () => {
           localStorage.setItem("accessToken", token);
 
           toast.success("Login successful");
-          navigate("/headercontact");
+          navigate("/homeslider");
         } else {
           toast.error("Login failed");
         }
