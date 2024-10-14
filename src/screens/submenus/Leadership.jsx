@@ -42,7 +42,7 @@ const Leadership = () => {
 
   const fetchTeam = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/leadership");
+      const response = await axios.get("https://api.antivibrations.com/leadership");
       setTeam(response.data);
       setData(response.data); 
     } catch (error) {
@@ -101,12 +101,12 @@ const Leadership = () => {
       try {
         if (editMode) {
           await axios.put(
-            `http://localhost:8000/leadership/${editingId}`,
+            `https://api.antivibrations.com/leadership/${editingId}`,
             formData
           );
           toast.success("Data Updated Successfully");
         } else {
-          await axios.post("http://localhost:8000/leadership", formData);
+          await axios.post("https://api.antivibrations.com/leadership", formData);
           toast.success("Data Submitted Successfully");
         }
         fetchTeam();
@@ -122,7 +122,7 @@ const Leadership = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/leadership/${id}`);
+      await axios.delete(`https://api.antivibrations.com/leadership/${id}`);
       toast.success("Data Deleted Successfully");
       fetchTeam();
     } catch (error) {

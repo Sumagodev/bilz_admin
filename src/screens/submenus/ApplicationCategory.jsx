@@ -29,7 +29,7 @@ const ApplicationCategory = () => {
         label: "Sr. No.",
         render: (value, index) => index + 1, // Adding serial number starting from 1
       },
-      { key: "title", label: "Product Name" }
+      { key: "title", label: "Application Category" }
     ];
   
     useEffect(() => {
@@ -61,7 +61,7 @@ const ApplicationCategory = () => {
       let isValid = true;
   
       if (!formData.title?.trim()) {
-        errors.title = "Product Name is required";
+        errors.title = "Application Category is required";
         isValid = false;
       }
   
@@ -320,11 +320,11 @@ const ApplicationCategory = () => {
                           <Button className="ms-1" onClick={() => toggleEdit(item.id)}>
                             <FaEdit />
                           </Button>
-                          <Button className="ms-1" onClick={() => handleDelete(item.id)}>
+                          <Button className="ms-1  btn-danger" onClick={() => handleDelete(item.id)}>
                             <FaTrash />
                           </Button>
                           <Button
-                            className="ms-1"
+                            className="ms-1 btn-success"
                             onClick={() =>
                               handleIsActive(item.id, !eyeVisibilityById[item.id])
                             }
@@ -348,8 +348,8 @@ const ApplicationCategory = () => {
                   <Row>
                     <Col md={6}>
                       <NewResuableForm
-                        label="Product Name"
-                        placeholder="Enter Product Name"
+                        label="Application Category"
+                        placeholder="Enter Application Category"
                         name="title"
                         type="text"
                         onChange={handleChange}

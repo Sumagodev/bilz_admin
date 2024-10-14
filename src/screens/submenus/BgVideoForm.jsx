@@ -65,7 +65,7 @@ const BgVideoForm = () => {
 
   const fetchTeam = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/bgvideoform");
+      const response = await axios.get("https://api.antivibrations.com/bgvideoform");
       setTeam(response.data);
       setData(response.data); // Update the context data
     } catch (error) {
@@ -102,12 +102,12 @@ const BgVideoForm = () => {
       try {
         if (editMode) {
           await axios.put(
-            `http://localhost:8000/bgvideoform/${editingId}`,
+            `https://api.antivibrations.com/bgvideoform/${editingId}`,
             formData
           );
           toast.success("Data Updated Successfully");
         } else {
-          await axios.post("http://localhost:8000/bgvideoform", formData);
+          await axios.post("https://api.antivibrations.com/bgvideoform", formData);
           toast.success("Data Submitted Successfully");
         }
         fetchTeam();
@@ -123,7 +123,7 @@ const BgVideoForm = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/bgvideoform/${id}`);
+      await axios.delete(`https://api.antivibrations.com/bgvideoform/${id}`);
       alert("Data Deleted Successfully");
       fetchTeam();
     } catch (error) {

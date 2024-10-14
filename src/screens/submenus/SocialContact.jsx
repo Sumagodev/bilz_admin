@@ -46,6 +46,9 @@ const SocialContact = () => {
     { name: <CustomHeader name="Email" />, cell: (row) => <span>{row.email}</span> },
     { name: <CustomHeader name="Whatsapp" />, cell: (row) => <span>{row.whatsapp}</span> },
     { name: <CustomHeader name="Linkedin" />, cell: (row) => <span>{row.linkedin}</span> },
+    { name: <CustomHeader name="Youtube" />, cell: (row) => <span>{row.youtube}</span> },
+    { name: <CustomHeader name="Work" />, cell: (row) => <span>{row.work}</span> },
+    { name: <CustomHeader name="Corporate Address" />, cell: (row) => <span>{row.address}</span> },
     {
       name: <CustomHeader name="Actions" />,
       cell: (row) => (
@@ -109,6 +112,19 @@ const SocialContact = () => {
       errors.linkedin = "LinkedIn link is required";
       isValid = false;
     }
+    if (!formData.youtube?.trim()) {
+      errors.youtube = "youtube link is required";
+      isValid = false;
+    }
+    if (!formData.work?.trim()) {
+      errors.work = "Work link is required";
+      isValid = false;
+    }
+    if (!formData.address?.trim()) {
+      errors.address = "Address link is required";
+      isValid = false;
+    }
+    
     if (!formData.whatsapp?.trim()) {
       errors.whatsapp = "Whatsapp number is required";
       isValid = false;
@@ -220,7 +236,7 @@ const SocialContact = () => {
             <Card.Header>
               <Row>
                 <Col className="d-flex justify-content-between align-items-center">
-                  <Button variant="primary" onClick={resetForm}>Create New Contact</Button>
+                  {/* <Button variant="primary" onClick={resetForm}>Create New Contact</Button> */}
                   {showTable && (
                     <SearchInput
                       searchQuery={searchQuery}
@@ -311,6 +327,41 @@ const SocialContact = () => {
                         error={errors.linkedin}
                       />
                     </Col>
+                    <Col md={6}>
+                      <NewResuableForm
+                        label={"Youtube"}
+                        placeholder={"Enter Youtube Link"}
+                        type={"text"}
+                        name={"youtube"}
+                        onChange={handleChange}
+                        initialData={formData}
+                        error={errors.youtube}
+                      />
+                    </Col>
+
+                    <Col md={6}>
+                      <NewResuableForm
+                        label={"Work"}
+                        placeholder={"Enter Work Link"}
+                        type={"text"}
+                        name={"work"}
+                        onChange={handleChange}
+                        initialData={formData}
+                        error={errors.work}
+                      />
+                    </Col>
+                    <Col md={6}>
+                      <NewResuableForm
+                        label={"Corporate Address"}
+                        placeholder={"Enter Youtube Link"}
+                        type={"text"}
+                        name={"address"}
+                        onChange={handleChange}
+                        initialData={formData}
+                        error={errors.address}
+                      />
+                    </Col>
+                    
                   </Row>
                   <Row>
                     <div className="mt-3 d-flex justify-content-end">

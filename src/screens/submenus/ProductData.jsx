@@ -18,10 +18,11 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { ThreeDots } from 'react-loader-spinner'; // Spinner for loading state
 
-const Infrastructure = () => {
+const ProductDetails = () => {
   const { setData, filteredData } = useSearchExport();
   const [team, setTeam] = useState([]);
   const [products, setProducts] = useState([]);
+  const [subproducts, setsubProducts] = useState([]);
   const [errors, setErrors] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -35,8 +36,6 @@ const Infrastructure = () => {
       {name}
     </div>
   );
-
-
 
   const tableColumns = (currentPage, rowsPerPage) => [
     {
@@ -53,18 +52,12 @@ const Infrastructure = () => {
       cell: (row) => <span>{row.desc}</span>,
     },
     {
-      name: <CustomHeader name="Category" />,
-      cell: (row) => <span>{row.ServiceName.title}</span>,
+      name: <CustomHeader name="Product Name" />,
+      cell: (row) => <span>{row.ProductName.productName }</span>,
     },
     {
-      name: <CustomHeader name="Image" />,
-      cell: (row) => (
-        <img
-          src={row.img}
-          alt="Infrastructure"
-          style={{ width: "100px", height: "auto" }}
-        />
-      ),
+      name: <CustomHeader name="Sub Product Name" />,
+      cell: (row) => <span>{row.ProductDetails.title }</span>,
     },
     {
       name: <CustomHeader name="Actions" />,
@@ -109,13 +102,12 @@ const Infrastructure = () => {
         </div>
       ),
     },
-
-
   ];
 
   useEffect(() => {
     fetchTeam();
     fetchProducts();
+    fetchSubProducts();
     const storedVisibility = JSON.parse(localStorage.getItem('eyeVisibilityById')) || {};
     setEyeVisibilityById(storedVisibility);
   }, []);
@@ -123,30 +115,49 @@ const Infrastructure = () => {
   const fetchProducts = async () => {
     const accessToken = localStorage.getItem("accessToken");
     try {
-      const response = await instance.get("ServiceName/find", {
+      const response = await instance.get("productName/find", {
         headers: {
           Authorization: "Bearer " + accessToken,
           "Content-Type": "application/json",
         },
       });
-      setProducts(response.data.responseData);
+      const reversedData = response.data.responseData.reverse();
+      setProducts(reversedData);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
+
+
+  const fetchSubProducts = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      const response = await instance.get("productName/getdetails", {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/json",
+        },
+      });
+      setsubProducts(response.data.responseData);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+
+
+  
+
   const validateForm = (formData) => {
     let errors = {};
     let isValid = true;
 
-    if (!formData.img) {
-      errors.img = "Image is required with 377x241 pixels";
-      isValid = false;
-    } else if (formData.img instanceof File && !validateImageSize(formData.img)) {
-      errors.img = "Image is not 377x241 pixels";
-      isValid = false;
-    }
     if (!formData.productId?.trim()) {
       errors.productId = "Product Name is required";
+      isValid = false;
+    }
+    if (!formData.subproductId?.trim()) {
+      errors.subproductId = "Sub Product Name is required";
       isValid = false;
     }
     if (!formData.title?.trim()) {
@@ -161,26 +172,12 @@ const Infrastructure = () => {
     setErrors(errors);
     return isValid;
   };
-  const validateImageSize = (file) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => {
-        if (img.width === 377 && img.height === 241) {
-          resolve();
-        } else {
-          reject("Image is required with 377x241 pixels");
-        }
-      };
-      img.onerror = () => reject("Error loading image");
-      img.src = URL.createObjectURL(file);
-    });
-  };
 
   const fetchTeam = async () => {
     setLoading(true);
     const accessToken = localStorage.getItem("accessToken");
     try {
-      const response = await instance.get("ServiceDetail/find", {
+      const response = await instance.get("Product_data/find", {
         headers: {
           Authorization: "Bearer " + accessToken,
           "Content-Type": "application/json",
@@ -206,25 +203,25 @@ const Infrastructure = () => {
     if (validateForm(formData)) {
       const accessToken = localStorage.getItem("accessToken");
       const data = new FormData();
-      data.append("img", formData.img);
       data.append("title", formData.title);
       data.append("description", formData.description);
       data.append("productId", formData.productId);
+      data.append("subproductId",formData.subproductId);
 
       try {
         if (editMode) {
-          await instance.put(`ServiceDetail/update/${editingId}`, data, {
+          await instance.put(`Product_data/update/${editingId}`, data, {
             headers: {
               Authorization: "Bearer " + accessToken,
-              "Content-Type": "multipart/form-data",
+              "Content-Type": "application/json",
             },
           });
           toast.success("Updated successfully!");
         } else {
-          await instance.post("ServiceDetail/add", data, {
+          await instance.post("Product_data/add", data, {
             headers: {
               Authorization: "Bearer " + accessToken,
-              "Content-Type": "multipart/form-data",
+              "Content-Type": "application/json",
             },
           });
           toast.success("Created successfully!");
@@ -251,10 +248,10 @@ const Infrastructure = () => {
     setEditingId(id);
     setEditMode(true);
     setFormData({
-      img: itemToEdit.img,
       title: itemToEdit.title,
       description: itemToEdit.description,
       productId: itemToEdit.productId,
+      subproductId:itemToEdit.subproductId
     });
     setShowForm(true);
   };
@@ -269,7 +266,7 @@ const Infrastructure = () => {
           onClick: async () => {
             const accessToken = localStorage.getItem("accessToken");
             try {
-              await instance.delete(`ServiceDetail/isdelete/${id}`, {
+              await instance.delete(`Product_data/isdelete/${id}`, {
                 headers: {
                   Authorization: "Bearer " + accessToken,
                   "Content-Type": "application/json",
@@ -296,7 +293,7 @@ const Infrastructure = () => {
     setEyeVisibilityById(updatedVisibility);
 
     instance
-      .put(`ServiceDetail/isactive/${id}`, { isActive }, {
+      .put(`Product_data/isactive/${id}`, { isActive }, {
         headers: {
           Authorization: "Bearer " + accessToken,
           "Content-Type": "application/json",
@@ -314,38 +311,59 @@ const Infrastructure = () => {
   return (
     <Container>
       <Row className="mb-3">
-        <Col md={12} >
-          {/* <h4 className="text-center">Infrastructure Form</h4> */}
-          <Button variant="outline-success"
-
-            className="ms-2 mb-3 d-flex justify-content-end " onClick={() => setShowForm((prev) => !prev)}>
-            {showForm ? "Hide Form" : "Add"}
-          </Button>
+      <Col md={12} >
+      <div className="d-flex justify-content-end">
+  <Button
+    variant="outline-success"
+    className="ms-2 mb-3"
+    onClick={() => setShowForm((prev) => !prev)}
+  >
+    {showForm ? "Hide Form" : "Add "}
+  </Button>
+</div>
           {showForm && (
             <Form onSubmit={handleSubmit} className="mt-3">
-              <Form.Group controlId="formProduct" className="mt-2">
-                <Form.Label>Application Category Name</Form.Label>
+               <Form.Group controlId="formProduct" className="mt-2">
+                <Form.Label>Product Name</Form.Label>
                 <Form.Control
                   as="select"
                   value={formData.productId || ""}
                   onChange={(e) => handleChange("productId", e.target.value)}
                   isInvalid={!!errors.productId}
                 >
-                  <option value="">Select a Application Category</option>
+                  <option value="">Select a product</option>
                   {products.map((product) => (
                     <option key={product.id} value={product.id}>
-                      {product.title} {/* Assuming 'name' is the field for product name */}
+                      {product.productName} {/* Assuming 'name' is the field for product name */}
                     </option>
                   ))}
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">{errors.productId}</Form.Control.Feedback>
               </Form.Group>
 
+              <Form.Group controlId="formsubProduct" className="mt-2">
+                <Form.Label>Sub Product Name</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={formData.subproductId || ""}
+                  onChange={(e) => handleChange("subproductId", e.target.value)}
+                  isInvalid={!!errors.subproductId}
+                >
+                  <option value="">Select a sub product</option>
+                  {subproducts.map((product) => (
+                    <option key={product.id} value={product.id}>
+                      {product.title} {/* Assuming 'name' is the field for product name */}
+                    </option>
+                  ))}
+                </Form.Control>
+                <Form.Control.Feedback type="invalid">{errors.subproductId}</Form.Control.Feedback>
+              </Form.Group>
+
               <Form.Group controlId="formTitle">
-                <Form.Label>Application Title</Form.Label>
+                <Form.Label>Title</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter Application title"
+                  placeholder="Enter title"
                   value={formData.title || ""}
                   onChange={(e) => handleChange("title", e.target.value)}
                   isInvalid={!!errors.title}
@@ -361,12 +379,12 @@ const Infrastructure = () => {
                   value={formData.description || ""}
                   onChange={(e) => handleChange("description", e.target.value)}
                   isInvalid={!!errors.description}
-                /> */}
-
-
-              <Col md={12}>
+                />
+                <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
+              </Form.Group> */}
+                  <Col md={12}>
                 <NewResuableForm
-                  label="Application Description"
+                  label="description"
                   placeholder="Enter Description"
                   name="description"
                   type="text"
@@ -377,32 +395,7 @@ const Infrastructure = () => {
                   error={errors.description}
                 />
               </Col>
-
-
-
-
-
-              {/* <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
-              </Form.Group> */}
-              {/* <Form.Group controlId="formImage" className="mt-2">
-                <Form.Label>Application Image</Form.Label>
-                <Form.Control
-                  type="file"
-                  onChange={(e) => handleChange("img", e.target.files[0])}
-                  isInvalid={!!errors.img}
-                /> */}
-                 <NewResuableForm
-                      label={"Upload Application Image"}
-                      placeholder={"Upload Image"}
-                      name={"img"}
-                      type={"file"}
-                      onChange={handleChange}
-                      initialData={formData}
-                      error={errors.img}
-                      imageDimensiion="Image must be 377*241 pixels"
-                    />
-                {/* <Form.Control.Feedback type="invalid">{errors.img}</Form.Control.Feedback>
-              </Form.Group> */}
+             
               <Button variant="primary" type="submit" className="mt-3">
                 {editMode ? "Update" : "Submit"}
               </Button>
@@ -412,23 +405,25 @@ const Infrastructure = () => {
             </Form>
           )}
         </Col>
+        </Row>
+     
+      <Row>
         <Col md={12}>
-          {/* <h4 className="text-center">Infrastructure List</h4> */}
           {loading ? (
-            <div className="d-flex justify-content-center mt-5">
-              <ThreeDots color="#00BFFF" height={80} width={80} />
+            <div className="d-flex justify-content-center align-items-center" style={{ height: '200px' }}>
+              <ThreeDots width={80} height={80} color="gray" />
             </div>
           ) : (
             <Table striped bordered hover className="mt-3">
               <thead>
                 <tr>
                   <th>Sr. No.</th>
-                  <th>Application Category Name</th>
-                  <th>Application Title</th>
-                  <th>Application Description</th>
-                 
-                  <th>Image</th>
-
+                  <th>Product</th>
+                
+                <th>Sub Product</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -436,21 +431,16 @@ const Infrastructure = () => {
                 {team.map((row, index) => (
                   <tr key={row.id}>
                     <td>{index + 1}</td>
-                    <td>{row.ServiceName.title}</td>
+                    <td>{row.ProductName.productName}</td>
+                    <td>{row.ProductImage.title}</td>
                     <td>{row.title}</td>
                     <td
                       dangerouslySetInnerHTML={{
                         __html: row.description,
                       }}
                     ></td>
-                    <td>{row.ServiceName.title}</td>
-                    <td>
-                      <img
-                        src={row.img}
-                        alt="Infrastructure"
-                        style={{ width: "100px", height: "auto" }}
-                      />
-                    </td>
+                   
+                    
                     <td>
                       <div className="d-flex">
                         <OverlayTrigger placement="top" overlay={<Tooltip>Edit</Tooltip>}>
@@ -469,7 +459,7 @@ const Infrastructure = () => {
                         </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={<Tooltip>Toggle Visibility</Tooltip>}>
                           <Button
-                            className="ms-1"
+                            className="ms-1 btn-success"
                             onClick={() => handleIsActive(row.id, !eyeVisibilityById[row.id])}
                           >
                             {eyeVisibilityById[row.id] ? <FaEye /> : <FaEyeSlash />}
@@ -488,4 +478,4 @@ const Infrastructure = () => {
   );
 };
 
-export default Infrastructure;
+export default ProductDetails;

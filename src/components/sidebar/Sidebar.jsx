@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
-import logo from "../../assets/images/logo1.png";
+import logo from "../../assets/images/L1.png";
 import { Sidebar as MenuBar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import {
@@ -29,25 +29,35 @@ const SidebarMenu = [
     mainIcon: <MdHome size={24} />,
     subMenu: [
       {
-        subMenus: "Image Slider",
+        subMenus: "Home Slider",
         url: "/homeslider",
         icon: <AiOutlineProject style={{ color: "red" }} size={24} />,
       },
       {
-        subMenus: "Home About Us",
+        subMenus: "About Us",
         url: "/headercontact",
         icon: <RiContactsBookLine style={{ color: "red" }} size={24} />,
       },
       {
-        subMenus: "Exhibition",
+        subMenus: "Vission/Mission",
+        url: "/About",
+        icon: <BsChatSquareQuote style={{ color: "red" }} size={24} />,
+      },
+      {
+        subMenus: "Exhibition Details",
         url: "/exhibition",
         icon: <BsBuilding style={{ color: "red" }} size={24} />,
       },
       {
-        subMenus: "Vibration Measurement",
-        url: "/v_measurment",
-        icon: <FiUsers style={{ color: "red" }} size={24} />,
+        subMenus: "Social Contacts",
+        url: "/social-contact",
+        icon: <RiContactsBookLine style={{ color: "red" }} size={24} />,
       },
+      // {
+      //   subMenus: "Vibration Analysis ",
+      //   url: "/v_measurment",
+      //   icon: <FiUsers style={{ color: "red" }} size={24} />,
+      // },
 
 
       // {
@@ -61,16 +71,17 @@ const SidebarMenu = [
       //   icon: <RiFileListLine style={{ color: "red" }} size={24} />,
       // },
      
-      {
-        subMenus: "Vibration Analysis",
-        url: "/v_analysis",
-        icon: <AiOutlineProject style={{ color: "red" }} size={24} />,
-      },
-      {
-        subMenus: "Further Analysis",
-        url: "/Further",
-        icon: <BsChatSquareQuote style={{ color: "red" }} size={24} />,
-      },
+      // {
+      //   subMenus: "Vibration Measurement ",
+      //   url: "/v_analysis",
+      //   icon: <AiOutlineProject style={{ color: "red" }} size={24} />,
+      // },
+      // {
+      //   subMenus: "Further Analysis",
+      //   url: "/Further",
+      //   icon: <BsChatSquareQuote style={{ color: "red" }} size={24} />,
+      // },
+   
    
       
     ],
@@ -87,17 +98,7 @@ const SidebarMenu = [
         icon: <FiUsers style={{ color: "red" }} size={24} />,
       },
 
-      
-      // {
-      //   subMenus: "Social Contacts",
-      //   url: "/social-contact",
-      //   icon: <RiContactsBookLine style={{ color: "red" }} size={24} />,
-      // },
-      // {
-      //   subMenus: "Home Sliding Media",
-      //   url: "/carousal",
-      //   icon: <RiFileListLine style={{ color: "red" }} size={24} />,
-      // },
+    
      
       {
         subMenus: "Vibration Analysis",
@@ -113,38 +114,43 @@ const SidebarMenu = [
     ],
   },
 
-  {
-    menu: "Service Overview",
-    url: "/serviceoverview",
-    mainIcon: <RiTeamFill size={24} />,
-    subMenu: [
-      {
-        subMenus: "Service Special",
-        url: "/Special",
-        icon: <FiUsers style={{ color: "red" }} size={24} />,
-      },
-    ]},
+  // {
+  //   menu: "Service Overview",
+  //   url: "/serviceoverview",
+  //   mainIcon: <RiTeamFill size={24} />,
+  //   subMenu: [
+  //     {
+  //       subMenus: "Service Special",
+  //       url: "/Special",
+  //       icon: <FiUsers style={{ color: "red" }} size={24} />,
+  //     },
+  //   ]},
 
+  // {
+  //   menu: "About Us",
+  //   url: "/about",
+  //   mainIcon: <RiTeamFill size={24} />,
+  //   subMenu: [
+  //     {
+  //       subMenus: "About Us",
+  //       url: "/About",
+  //       icon: <BsChatSquareQuote style={{ color: "red" }} size={24} />,
+  //     },
+  //   ],
+  // },
   {
-    menu: "About Us",
-    url: "/about",
-    mainIcon: <RiTeamFill size={24} />,
-    subMenu: [
-      {
-        subMenus: "About Us",
-        url: "/About",
-        icon: <BsChatSquareQuote style={{ color: "red" }} size={24} />,
-      },
-    ],
-  },
-  {
-    menu: "About Us Career",
+    menu: "Career",
     url: "/contactus",
     mainIcon: <MdOutlinePermContactCalendar size={24} />,
     subMenu: [
     {
-      subMenus: "Apply Now",
+      subMenus: "Internship Data",
       url: "/apply_now",
+      icon: <BsBuilding style={{ color: "red" }} size={24} />,
+    },
+    {
+      subMenus: "Job Data",
+      url: "/job",
       icon: <BsBuilding style={{ color: "red" }} size={24} />,
     },
   ],
@@ -156,7 +162,7 @@ const SidebarMenu = [
     subMenu: [
       
       {
-        subMenus: "News1",
+        subMenus: "News Details",
         url: "/News1",
         icon: <BsNewspaper style={{ color: "red" }} size={24} />,
       },
@@ -175,7 +181,7 @@ const SidebarMenu = [
         icon: <BsNewspaper style={{ color: "red" }} size={24} />,
       },
       {
-        subMenus: "Product Images",
+        subMenus: "Application Details",
         url: "/productimages",
         icon: <IoIosOptions style={{ color: "red" }} size={24} />,
       },
@@ -183,12 +189,12 @@ const SidebarMenu = [
   },
 
   {
-    menu: "Download Pdf",
+    menu: "Download Brochure",
     url: "/pdf",
     mainIcon: <RiTeamFill size={24} />,
     subMenu: [
       {
-        subMenus: "PDF",
+        subMenus: "Brouchure",
         url: "/pdf",
         icon: <BsNewspaper style={{ color: "red" }} size={24} />,
       },
@@ -200,11 +206,11 @@ const SidebarMenu = [
       url: "/Overview",
       mainIcon: <BsNewspaper size={24} />,
       subMenu: [
-        {
-          subMenus: "Your Solution",
-          url: "/solution",
-          icon: <BsNewspaper style={{ color: "red" }} size={24} />,
-        },
+        // {
+        //   subMenus: "Your Solution",
+        //   url: "/solution",
+        //   icon: <BsNewspaper style={{ color: "red" }} size={24} />,
+        // },
         {
           subMenus: "Implemented Solution",
           url: "/implemented",
@@ -212,89 +218,86 @@ const SidebarMenu = [
         },
 
       ]},
-  // {
-  //   menu: "Product",
-  //   url: "/product",
-  //   mainIcon: <FiList size={24} />,
-  //   subMenu: [
+  {
+    menu: "Product",
+    url: "/product",
+    mainIcon: <FiList size={24} />,
+    subMenu: [
       
-  //     {
-  //       subMenus: "Product Name",
-  //       url: "/productname",
-  //       icon: <IoIosOptions style={{ color: "red" }} size={24} />,
-  //     },
+      {
+        subMenus: "Product Name",
+        url: "/productname",
+        icon: <IoIosOptions style={{ color: "red" }} size={24} />,
+      },
 
 
-  //     {
-  //       subMenus: "Product Details",
-  //       url: "/productdetails",
-  //       icon: <IoIosOptions style={{ color: "red" }} size={24} />,
-  //     },
+      {
+        subMenus: "Sub Product Details",
+        url: "/productdetails",
+        icon: <IoIosOptions style={{ color: "red" }} size={24} />,
+      },
+      {
+        subMenus: "Product Data",
+        url: "/productdata",
+        icon: <FiFileText style={{ color: "red" }} size={24} />,
+      },
+      {
+        subMenus: "Product Accordion",
+        url: "/productdata2",
+        icon: <FiFileText style={{ color: "red" }} size={24} />,
+      },
     
-  //     {
-  //       subMenus: "Models",
-  //       url: "/technicaldata",
-  //       icon: <FiFileText style={{ color: "red" }} size={24} />,
-  //     },
-  //     {
-  //       subMenus: "Accessories & Optional",
-  //       url: "/optionsdata",
-  //       icon: <IoIosOptions style={{ color: "red" }} size={24} />,
-  //     },
-  //     // {
-  //     //   subMenus: "Material Data",
-  //     //   url: "/materialdata",
-  //     //   icon: <RiFileListLine style={{ color: "red" }} size={24} />,
-  //     // },
-  //     {
-  //       subMenus: "Application Data",
-  //       url: "/applicationdata",
-  //       icon: <RiFileListLine style={{ color: "red" }} size={24} />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   menu: "Blog",
-  //   url: "/blog",
-  //   mainIcon: <FaRegNewspaper size={24} />,
-  //   subMenu: [
-  //     {
-  //       subMenus: "Blog Details",
-  //       url: "/blogdetails",
-  //       icon: <FaRegNewspaper style={{ color: "red" }} size={24} />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   menu: "News and Event",
-  //   url: "/newsandevent",
-  //   mainIcon: <BsNewspaper size={24} />,
-  //   subMenu: [
-  //     {
-  //       subMenus: "News",
-  //       url: "/news",
-  //       icon: <BsNewspaper style={{ color: "red" }} size={24} />,
-  //     },
-    
+   
+   
+      // {
+      //   subMenus: "Accessories & Optional",
+      //   url: "/optionsdata",
+      //   icon: <IoIosOptions style={{ color: "red" }} size={24} />,
+      // },
+      // {
+      //   subMenus: "Material Data",
+      //   url: "/materialdata",
+      //   icon: <RiFileListLine style={{ color: "red" }} size={24} />,
+      // },
+      // {
+      //   subMenus: "Application Data",
+      //   url: "/applicationdata",
+      //   icon: <RiFileListLine style={{ color: "red" }} size={24} />,
+      // },
+    ],
+  },
 
-     
-      
-     
-    
-      
-      
-  //   ],
-  // },
   {
     menu: "Contact Us",
     url: "/contactus",
     mainIcon: <MdOutlinePermContactCalendar size={24} />,
     subMenu: [
+     
       {
-        subMenus: "Contact Person",
+        subMenus: "Contact Us",
         url: "/contactperson",
         icon: <AiOutlineAppstoreAdd style={{ color: "red" }} size={24} />,
       },
+      {
+        subMenus: "Distributer",
+        url: "/distributer",
+        icon: <AiOutlineAppstoreAdd style={{ color: "red" }} size={24} />,
+      },
+      {
+        subMenus: "Contact",
+        url: "/contact_form",
+        icon: <AiOutlineAppstoreAdd style={{ color: "red" }} size={24} />,
+      },
+      {
+        subMenus: "Feedback",
+        url: "/feedback",
+        icon: <AiOutlineAppstoreAdd style={{ color: "red" }} size={24} />,
+      },
+      // {
+      //   subMenus: "Cv List",
+      //   url: "/uploadcv",
+      //   icon: <FiUploadCloud style={{ color: "red" }} size={24} />,
+      // },
     ]},
    
   // {
@@ -307,11 +310,7 @@ const SidebarMenu = [
   //       url: "/carousalform",
   //       icon: <RiFileListLine style={{ color: "red" }} size={24} />,
   //     },
-  //     {
-  //       subMenus: "Cv List",
-  //       url: "/uploadcv",
-  //       icon: <FiUploadCloud style={{ color: "red" }} size={24} />,
-  //     },
+    
   //     {
   //       subMenus: "Subscriber List",
   //       url: "/subscribe",
@@ -379,7 +378,7 @@ const Sidebar = () => {
     <nav ref={navbarRef} className={`sidebar ${isSidebarOpen ? "sidebar-show" : ""}`}>
       <div className="sidebar-top">
         <div className="sidebar-brand">
-          <img className="w-75 sz " src={logo} alt="Logo" />
+          <img className="w-75 m-2  " src={logo} alt="Logo" />
           {/* <span className="sidebar-brand-text text-danger">
             Bilz
           </span> */}

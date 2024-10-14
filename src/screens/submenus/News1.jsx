@@ -27,7 +27,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { ThreeDots  } from 'react-loader-spinner'; 
 import { Tooltip, OverlayTrigger,  } from 'react-bootstrap';
 import "../../App.scss";
-const Infrastructure = () => {
+const News = () => {
   // const {  setData, filteredData } =
   //   useSearchExport();
   const { searchQuery, handleSearch, handleExport, setData, filteredData } =
@@ -70,7 +70,7 @@ const Infrastructure = () => {
       cell: (row) => (
         <img
           src={row.img}
-          alt="Infrastructure"
+          alt="News"
           style={{ width: "100px", height: "auto" }}
         />
       ),
@@ -177,14 +177,14 @@ const Infrastructure = () => {
     let isValid = true;
 
     if (!formData.img) {
-      errors.img = "Image is not 338x220 pixels";
+      errors.img = "Image is not 337x286 pixels";
       isValid = false;
     
     } else if (
       formData.img instanceof File &&
       !validateImageSize(formData.img)
     ) {
-      errors.img = "Image is required with 338x220 pixels";
+      errors.img = "Image is required with 337x286 pixels";
       isValid = false;
     }
     if (!formData.title?.trim()) {
@@ -209,10 +209,10 @@ const Infrastructure = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width === 338 && img.height === 220) {
+        if (img.width === 337 && img.height === 286) {
           resolve();
         } else {
-          reject("Image is required with 338x220 pixels");
+          reject("Image is required with 337x286 pixels");
         }
       };
       img.onerror = () => reject("Error loading image");
@@ -527,14 +527,14 @@ const Infrastructure = () => {
                       />
                     )}
                     <NewResuableForm
-                      label={"Upload Infrastructure Image"}
+                      label={"Upload News Image"}
                       placeholder={"Upload Image"}
                       name={"img"}
                       type={"file"}
                       onChange={handleChange}
                       initialData={formData}
                       error={errors.img}
-                      imageDimensiion="Image must be 338x220 pixels"
+                      imageDimensiion="Image must be 337*286 pixels"
                     />
                   </Col>
                   <Col md={6}>
@@ -557,6 +557,7 @@ const Infrastructure = () => {
                       onChange={handleChange}
                       initialData={formData}
                       textarea
+                      useJodit={true}
                       error={errors.desc}
                       // charLimit={1000}
                     />
@@ -582,4 +583,4 @@ const Infrastructure = () => {
   );
 };
 
-export default Infrastructure;
+export default News;

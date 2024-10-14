@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
-import logo from "../../assets/images/image.png";
+import logo from "../../assets/images/L1.png";
 import { ThreeDots } from 'react-loader-spinner';
 
 const Login = () => {
@@ -83,7 +83,7 @@ const Login = () => {
             <Card.Body className="p-4 p-md-5 bg-white">
               <Row className="align-items-center mb-4">
                 <Col xs={12} className="text-center mb-3">
-                  <Image src={logo} alt="Logo" fluid style={{ maxWidth: "80px", width: "100%" }} />
+                  <Image src={logo} alt="Logo" fluid style={{ maxWidth: "150px", width: "100%" }} />
                 </Col>
                 <Col xs={12}>
                   <h3 className="text-center text-primary font-weight-bold"></h3>
@@ -150,10 +150,10 @@ const Login = () => {
                   <Row className="justify-content-center">
                     <Col xs="auto">
                       <Button
-                        variant="primary"
+                        // variant="primary"
                         type="submit"
-                        className="mt-4 py-2 px-5 rounded-pill shadow-lg"
-                        style={{ backgroundColor: "#007bff", border: "none" }}
+                        className="mt-4 py-2 px-5 rounded-pill shadow-lg clr"
+                        style={{ border: "none" }}
                         disabled={loading}
                       >
                         Login

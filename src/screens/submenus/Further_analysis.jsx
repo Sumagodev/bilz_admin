@@ -53,7 +53,7 @@ const Further_analysis = () => {
       selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1,
     },
     {
-      name: <CustomHeader name="name" />,
+      name: <CustomHeader name="Title" />,
       cell: (row) => <span>{row.name}</span>,
     },
     {
@@ -171,13 +171,13 @@ const Further_analysis = () => {
       isValid = false;
     }
     if (!formData.img) {
-      errors.img = "Image is required with 338x220 pixels";
+      errors.img = "Image is required with 113x108 pixels";
       isValid = false;
     } else if (
       formData.img instanceof File &&
       !validateImageSize(formData.img)
     ) {
-      errors.img = "Image is not 338x220 pixels";
+      errors.img = "Image is not 113x108 pixels";
       isValid = false;
     }
 
@@ -189,10 +189,10 @@ const Further_analysis = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width === 338 && img.height === 220) {
+        if (img.width === 113 && img.height === 108) {
           resolve();
         } else {
-          reject("Image must be 338x220 pixels");
+          reject("Image must be 113x108 pixels");
         }
       };
       img.onerror = () => reject("Error loading image");
@@ -483,20 +483,20 @@ const Further_analysis = () => {
                       />
                     )}
                     <NewResuableForm
-                      label={"Upload Slider Image"}
+                      label={"Upload Further Analysis Image"}
                       placeholder={"Upload Image"}
                       name={"img"}
                       type={"file"}
                       onChange={handleChange}
                       initialData={formData}
                       error={errors.img}
-                      imageDimensiion="Image must be 500x300 pixels"
+                      imageDimensiion="Image must be 113*108 pixels"
                     />
                   </Col>
                   <Col md={6}>
                     <NewResuableForm
-                      label="name"
-                      placeholder="Enter name"
+                      label="Title"
+                      placeholder="Enter title"
                       name="name"
                       type="text"
                       onChange={handleChange}

@@ -65,6 +65,8 @@ const AreaTop = ({ buttonValue, tableView }) => {
 "/productdetails",
 "/technicaldata",
 "/optionsdata",
+"/productdata",
+"/productdata2",
  "/materialdata",
  "/blogdetails",
  "/applicationdata",
@@ -74,21 +76,43 @@ const AreaTop = ({ buttonValue, tableView }) => {
  "/apply_now",
  "/contactsalesperson",
  "/events",
- "/news",
+ "/News1",
  "/productimages",
  "/social-contact",
- "/News",
+ "/News1",
  "/applicationcategory",
  "/pdf",
  "/solution",
  "/implemented",
  "/contactperson",
+ "/job",
+ "/distributer",
+ "/contact_form",
+ "/feedback"
   ];
   const isHiddenPath = hiddenPaths.includes(location.pathname);
 
   useEffect(() => {
     if (window.location.pathname == "/About") {
-      setHeader("About Us");
+      setHeader("Vission/Mission");
+    }
+    else if (window.location.pathname == "/productdata") {
+      setHeader("Product Data");
+    }
+    else if (window.location.pathname == "/productdata2") {
+      setHeader("Product Accordion");
+    }
+    else if (window.location.pathname == "/job") {
+      setHeader("Job Data");
+    }
+    else if (window.location.pathname == "/distributer") {
+      setHeader("Distributer Data");
+    }
+    else if (window.location.pathname == "/contact_form") {
+      setHeader("Contact Data");
+    }
+    else if (window.location.pathname == "/feedback") {
+      setHeader("Feedback Data");
     }
     else if (window.location.pathname == "/Special") {
       setHeader("Service Special");
@@ -106,13 +130,13 @@ const AreaTop = ({ buttonValue, tableView }) => {
       setHeader("Application Category");
     }
     else if (window.location.pathname == "/headercontact") {
-      setHeader("Home About Us");
+      setHeader("About Us");
     } else if (window.location.pathname == "/homeslider") {
-      setHeader("Image Slider");
+      setHeader("Home Slider");
     } else if (window.location.pathname == "/carousal") {
       setHeader("Home Sliding Media");
     } else if (window.location.pathname == "/exhibition") {
-      setHeader("Exhibition");
+      setHeader("Exhibition Details");
     } else if (window.location.pathname == "/v_measurment") {
       setHeader("Vibration Measurement");
     }
@@ -136,8 +160,8 @@ const AreaTop = ({ buttonValue, tableView }) => {
       setHeader("Material Data");
     } else if (window.location.pathname == "/blogdetails") {
       setHeader("Blog Details");
-    } else if (window.location.pathname == "/news") {
-      setHeader("News");
+    } else if (window.location.pathname == "/News1") {
+      setHeader("News Details");
     } else if (window.location.pathname == "/events") {
       setHeader("Events");
     } else if (window.location.pathname == "/contactsalesperson") {
@@ -149,7 +173,7 @@ const AreaTop = ({ buttonValue, tableView }) => {
     } else if (window.location.pathname == "/requestcallbackform") {
       setHeader("Request Callback Form");
     } else if (window.location.pathname == "/apply_now") {
-      setHeader("Apply Now");
+      setHeader("Internship Data");
     } else if (window.location.pathname == "/getintouch") {
       setHeader("Get In Touch");
     } else if (window.location.pathname == "/subscribe") {
@@ -159,11 +183,11 @@ const AreaTop = ({ buttonValue, tableView }) => {
     } else if (window.location.pathname == "/applicationdata") {
       setHeader("Application Data");
     }else if (window.location.pathname == "/productimages") {
-    setHeader("Product Images");
+    setHeader("Application Details");
   } else if (window.location.pathname == "/News1") {
     setHeader("News");
   } else if (window.location.pathname == "/pdf") {
-    setHeader("Download PDF");
+    setHeader("Brouchure Data");
   }
     
   }, [window.location.pathname]);

@@ -80,9 +80,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const instance = axios.create({
-  // baseURL: `https://positivebackend.sumagodemo.com/`,
-  // baseURL: `https://api.positivemetering.in/`,
-  baseURL: `  http://localhost:8000/`,
+
+  baseURL: `https://api.antivibrations.com/`,
+  // baseURL: `http://localhost:8000/`,
+
 });
 
 instance.interceptors.request.use(

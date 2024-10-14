@@ -38,11 +38,11 @@ const PDF = () => {
       selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1,
     },
     {
-      name: "Title",
+      name: "Brochure Title",
       cell: (row) => <span>{row.title}</span>,
     },
     {
-      name: "PDF",
+      name: "Brochure",
       cell: (row) => (
         row.pdf ? (
           <a style={{ textDecoration: "none" }} href={row.pdf} target="_blank" rel="noopener noreferrer">
@@ -97,7 +97,7 @@ const PDF = () => {
     setLoading(true);
     const accessToken = localStorage.getItem("accessToken");
     try {
-      const response = await instance.get("Service_pdf/get", {
+      const response = await instance.get("Service_pdf/find", {
         headers: {
           Authorization: "Bearer " + accessToken,
           "Content-Type": "application/json",
@@ -180,7 +180,7 @@ const PDF = () => {
           <h2>Confirm to delete</h2>
           <p>Are you sure you want to delete this data?</p>
           <div>
-            <button
+            <button className="btn btn-primary"
               onClick={async () => {
                 setLoading(true);
                 const accessToken = localStorage.getItem("accessToken");
@@ -204,7 +204,9 @@ const PDF = () => {
             >
               Yes
             </button>
-            <button onClick={onClose}>No</button>
+            <button className="btn btn-secondary" onClick={() => onClose()}>
+              No
+            </button>
           </div>
         </div>
       ),
@@ -283,11 +285,12 @@ const PDF = () => {
               <Row>
                 {showTable ? (
                   <Col className="d-flex justify-content-end align-items-center">
-                    <SearchInput
-                      searchQuery={searchQuery}
-                      onSearch={handleSearch}
-                      showExportButton={false}
-                    />
+                         <SearchInput
+            searchQuery={searchQuery}
+            onSearch={handleSearch}
+            
+            showExportButton={false}
+          />
                     <Button
                       variant="outline-success"
                       onClick={handleAdd}
@@ -334,8 +337,8 @@ const PDF = () => {
                   <Row>
                     <Col md={6}>
                       <NewResuableForm
-                        label={"Title"}
-                        placeholder={"Enter Title"}
+                        label={"Brochure Title"}
+                        placeholder={"Enter Brochure Title"}
                         name={"title"}
                         type={"text"}
                         onChange={handleChange}
@@ -345,8 +348,8 @@ const PDF = () => {
                     </Col>
                     <Col md={12}>
                       <NewResuableForm
-                        label={"Upload PDF"}
-                        placeholder={"Upload PDF (optional)"}
+                        label={"Upload Brochure"}
+                        placeholder={"Upload Brochure (optional)"}
                         name={"pdf"}
                         type={"file"}
                         onChange={handleChange}

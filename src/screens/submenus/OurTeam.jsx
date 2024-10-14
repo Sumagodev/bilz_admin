@@ -57,15 +57,15 @@ const OurTeam = () => {
 
 
     {
-      name: <CustomHeader name="Name" />,
+      name: <CustomHeader name="Service Name" />,
       cell: (row) => <span>{row.name}</span>,
     },
     {
-      name: <CustomHeader name="Description" />,
+      name: <CustomHeader name="Service Title" />,
       cell: (row) => <span>{row.company_Name}</span>,
     },
     {
-      name: <CustomHeader name="Review" />,
+      name: <CustomHeader name="Service Description" />,
       cell: (row) => <span>{row.review}</span>,
     },
     {
@@ -90,7 +90,7 @@ const OurTeam = () => {
               <FaEdit />
             </Button>
           </OverlayTrigger>
-          <OverlayTrigger
+          {/* <OverlayTrigger
             placement="top"
             overlay={<Tooltip id="delete-tooltip">Delete</Tooltip>}
           >
@@ -117,7 +117,7 @@ const OurTeam = () => {
             >
               {eyeVisibilityById[row.id] ? <FaEyeSlash /> : <FaEye />}
             </Button>
-          </OverlayTrigger>
+          </OverlayTrigger> */}
         </div>
       ),
     },
@@ -180,10 +180,10 @@ const OurTeam = () => {
     let isValid = true;
 
     if (!formData.img) {
-      errors.img = "Image is required with 443x435 pixels";
+      errors.img = "Image is required with 550x500 pixels";
       isValid = false;
     } else if (formData.img instanceof File && !validateImageSize(formData.img)) {
-      errors.img = "Image is not 443x435 pixels";
+      errors.img = "Image is not 550x500 pixels";
       isValid = false;
     }
 
@@ -194,11 +194,11 @@ const OurTeam = () => {
     }
 
     if (!formData.company_Name?.trim()) {
-      errors.company_Name = "company_Name is required";
+      errors.company_Name = "Description is required";
       isValid = false;
     }
     if (!formData.review?.trim()) {
-      errors.review = "review is required";
+      errors.review = "Sub Desription is required";
       isValid = false;
     }
    
@@ -211,10 +211,10 @@ const OurTeam = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width === 443 && img.height === 435) {
+        if (img.width === 550 && img.height === 500) {
           resolve();
         } else {
-          reject("Image must be 443x435 pixels");
+          reject("Image must be 550x500 pixels");
         }
       };
       img.onerror = () => reject("Error loading image");
@@ -451,13 +451,13 @@ const OurTeam = () => {
             
             showExportButton={false}
           />
-                  <Button
+                  {/* <Button
                     variant="outline-success"
                     onClick={handleAdd}
                     className="ms-2 mb-3"
                   >
                     Add
-                  </Button>
+                  </Button> */}
                 </Col>
               ) : (
                 <Col className="d-flex justify-content-end align-items-center">
@@ -523,19 +523,19 @@ const OurTeam = () => {
                       />
                     )}
                     <NewResuableForm
-                      label={"Upload Blog Image"}
+                      label={"Upload Vibration Image"}
                       placeholder={"Upload Image"}
                       name={"img"}
                       type={"file"}
                       onChange={handleChange}
                       initialData={formData}
                       error={errors.img}
-                      imageDimensiion="Image must be 443*435 pixels" 
+                      imageDimensiion="Image must be 550*500 pixels" 
                     />
                     </Col>
                     <Col md={6}>
                     <NewResuableForm
-                      label={"Name"}
+                      label={"Service Name"}
                       placeholder={"Enter Name"}
                       name={"name"}
                       type={"text"}
@@ -546,8 +546,8 @@ const OurTeam = () => {
                   </Col>
                   <Col md={6}>
                     <NewResuableForm
-                      label={"Company_Name "}
-                      placeholder={"Enter Company_Name"}
+                      label={"Service Title "}
+                      placeholder={"Enter Title"}
                       name={"company_Name"}
                       type={"text"}
                       onChange={handleChange}
@@ -557,8 +557,8 @@ const OurTeam = () => {
                   </Col>
                   <Col md={6}>
                     <NewResuableForm
-                      label={"Review "}
-                      placeholder={"Enter Review "}
+                      label={"Service Desription "}
+                      placeholder={"Enter Desription "}
                       name={"review"}
                       type={"text"}
                       onChange={handleChange}

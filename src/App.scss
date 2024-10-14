@@ -110,6 +110,15 @@ button {
 ul {
   list-style-type: none;
 }
+.clr {
+  background-color: #7CFC00; /* Parrot green color */
+  border: none;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.clr:hover {
+  background-color: skyblue; /* Darker green on hover */
+}
 
 // theme toggle button
 .theme-toggle-btn {

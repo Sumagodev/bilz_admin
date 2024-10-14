@@ -71,7 +71,7 @@ const Infrastructure = () => {
         <img
           src={row.img}
           alt="Infrastructure"
-          style={{ width: "100px", height: "auto" }}
+          style={{ width: "100px", height: "auto"}}
         />
       ),
     },
@@ -177,14 +177,14 @@ const Infrastructure = () => {
     let isValid = true;
 
     if (!formData.img) {
-      errors.img = "Image is not 338x220 pixels";
+      errors.img = "Image is not 425x286 pixels";
       isValid = false;
     
     } else if (
       formData.img instanceof File &&
       !validateImageSize(formData.img)
     ) {
-      errors.img = "Image is required with 338x220 pixels";
+      errors.img = "Image is required with 425x286 pixels";
       isValid = false;
     }
     if (!formData.title?.trim()) {
@@ -209,10 +209,10 @@ const Infrastructure = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width === 338 && img.height === 220) {
+        if (img.width === 425 && img.height === 286) {
           resolve();
         } else {
-          reject("Image is required with 338x220 pixels");
+          reject("Image is required with 425x286 pixels");
         }
       };
       img.onerror = () => reject("Error loading image");
@@ -534,7 +534,7 @@ const Infrastructure = () => {
                       onChange={handleChange}
                       initialData={formData}
                       error={errors.img}
-                      imageDimensiion="Image must be 338x220 pixels"
+                      imageDimensiion="Image must be 425*286 pixels"
                     />
                   </Col>
                   <Col md={6}>

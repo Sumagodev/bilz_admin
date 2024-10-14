@@ -28,7 +28,10 @@ const HomeSlider = () => {
   const {  setData, filteredData } =
     useSearchExport();
 
-  const [team, setTeam] = useState([]);
+  const [team, setTeam] = useState([
+    
+  ]);
+  
   const [errors, setErrors] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -171,13 +174,13 @@ const HomeSlider = () => {
       isValid = false;
     }
     if (!formData.img) {
-      errors.img = "Image is required with 338x220 pixels";
+      errors.img = "Image is required with 1379x632 pixels";
       isValid = false;
     } else if (
       formData.img instanceof File &&
       !validateImageSize(formData.img)
     ) {
-      errors.img = "Image is not 338x220 pixels";
+      errors.img = "Image is not 1379x632 pixels";
       isValid = false;
     }
 
@@ -189,10 +192,10 @@ const HomeSlider = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width === 338 && img.height === 220) {
+        if (img.width === 1379 && img.height === 632) {
           resolve();
         } else {
-          reject("Image must be 338x220 pixels");
+          reject("Image must be 1379x632 pixels");
         }
       };
       img.onerror = () => reject("Error loading image");
@@ -490,7 +493,7 @@ const HomeSlider = () => {
                       onChange={handleChange}
                       initialData={formData}
                       error={errors.img}
-                      imageDimensiion="Image must be 500x300 pixels"
+                      imageDimensiion="Image must be 1379*632 pixels"
                     />
                   </Col>
                   <Col md={6}>
@@ -499,6 +502,7 @@ const HomeSlider = () => {
                       placeholder="Enter Title"
                       name="title"
                       type="text"
+                      value={formData.title} 
                       onChange={handleChange}
                       initialData={formData}
                       error={errors.title}

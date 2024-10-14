@@ -144,13 +144,13 @@ const Events = () => {
     let isValid = true;
 
     if (!formData.img) {
-      errors.img = "Image is required with 627x430 pixels";
+      errors.img = "Image is required with 105x105 pixels";
       isValid = false;
     } else if (
       formData.img instanceof File &&
       !validateImageSize(formData.img)
     ) {
-      errors.img = "Image is not 627x430 pixels";
+      errors.img = "Image is not 105x105 pixels";
       isValid = false;
     }
     
@@ -167,10 +167,10 @@ const Events = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width === 627 && img.height === 430) {
+        if (img.width === 105 && img.height === 105) {
           resolve();
         } else {
-          reject("Image must be 596x394 pixels");
+          reject("Image must be 105x105 pixels");
         }
       };
       img.onerror = () => reject("Error loading image");

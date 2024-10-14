@@ -15,6 +15,7 @@ import {
   Table,
   Tooltip, OverlayTrigger,  
 } from "react-bootstrap";
+import * as XLSX from "xlsx"; // Import xlsx for exporting
 import DataTable from "react-data-table-component";
 import { useSearchExport } from "../../context/SearchExportContext";
 import { ShowContext } from "../../context/ShowContext";
@@ -30,8 +31,14 @@ import { ThreeDots  } from 'react-loader-spinner';
 
 import "../../App.scss";
 const Office = () => {
-  const { searchQuery, handleSearch, handleExport, setData, filteredData } =
-  useSearchExport();
+  const {
+    searchQuery,
+    handleSearch,
+    handleExport,
+    setData,
+    filteredData,
+    data,
+  } = useSearchExport();
 
   const [team, setTeam] = useState([]);
   const [errors, setErrors] = useState({});
@@ -63,11 +70,11 @@ const Office = () => {
       cell: (row) => <span>{row.name}</span>,
     },
     {
-      name: <CustomHeader name="position" />,
+      name: <CustomHeader name="City" />,
       cell: (row) => <span>{row.position}</span>,
     },
     {
-      name: <CustomHeader name="Phone Number" />,
+      name: <CustomHeader name="Mobile No" />,
       cell: (row) => <span>{row.phone}</span>,
     },
     {
@@ -76,10 +83,10 @@ const Office = () => {
     },
     {
       name: <CustomHeader name="Message" />,
-      cell: (row) => <span>{row.msg}</span>,
+      cell: (row) => <span className="d-flex justify-content-center">{row.msg}</span>,
     },
     {
-      name: <CustomHeader name="Image" />,
+      name: <CustomHeader name="Pdf" />,
       cell: (row) => (
         <img
           src={row.img}
@@ -88,18 +95,27 @@ const Office = () => {
         />
       ),
     },
+    {
+      name: <CustomHeader name="Date" />,
+      cell: (row) => {
+        const formattedDate = new Date(row.createdAt).toLocaleDateString();
+        return <span className="d-flex justify-content-center">{formattedDate}</span>;
+      },
+    },
+
+    
 {
   name: <CustomHeader name="Actions" />,
   cell: (row) => (
     <div className="d-flex">
-      <OverlayTrigger
+      {/* <OverlayTrigger
         placement="top"
         overlay={<Tooltip id="edit-tooltip">Edit</Tooltip>}
       >
         <Button className="ms-1" onClick={() => toggleEdit(row.id)}>
           <FaEdit />
         </Button>
-      </OverlayTrigger>
+      </OverlayTrigger> */}
       <OverlayTrigger
         placement="top"
         overlay={<Tooltip id="delete-tooltip">Delete</Tooltip>}
@@ -133,6 +149,19 @@ const Office = () => {
 },
  
   ];
+
+  // const exportData = () => {
+  //   const dataToExport = searchQuery.trim() ? filteredData : team;
+  //   handleExport(dataToExport, tableColumns, "InternshipList");
+  // };
+
+  const exportToExcel = () => {
+    const dataToExport = searchQuery.trim() ? filteredData : team;
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport); // Convert JSON data to worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Team Data"); // Append worksheet to workbook
+    XLSX.writeFile(workbook, "Internship.xlsx"); // Download as Excel file
+  };
 
   useEffect(() => {
     fetchTeam();
@@ -451,15 +480,18 @@ const Office = () => {
                 <SearchInput
               searchQuery={searchQuery}
               onSearch={handleSearch}
-           
+                
+
+
               showExportButton={false} 
             />
-                  <Button
+               
+                    <Button
                     variant="outline-success"
-                    onClick={handleAdd}
+                    onClick={exportToExcel} // Trigger Excel export
                     className="ms-2 mb-3"
                   >
-                    Add
+                    Export to Excel
                   </Button>
                 </Col>
               ) : (

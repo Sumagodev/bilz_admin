@@ -474,10 +474,20 @@ const HeaderContact = () => {
       name: <CustomHeader name="Title" />,
       cell: (row) => <span>{row.title}</span>,
     },
-    {
-      name: <CustomHeader name="Description" />,
-      cell: (row) => <span>{row.description}</span>,
-    },
+    // {
+    //   name: <CustomHeader name="Description" />,
+    //   cell: (row) => <span>{row.description}</span>,
+    // },
+     {
+    name: <CustomHeader name="Description" />,
+    cell: (row) => (
+      <span>
+        {row.description.length > 100
+          ? `${row.description.substring(0, 100)}...`
+          : row.description}
+      </span>
+    ),
+  },
     {
       name: <CustomHeader name="Actions" />,
       cell: (row) => (
@@ -490,7 +500,7 @@ const HeaderContact = () => {
               <FaEdit />
             </Button>
           </OverlayTrigger>
-          <OverlayTrigger
+          {/* <OverlayTrigger
             placement="top"
             overlay={<Tooltip id="delete-tooltip">Delete</Tooltip>}
           >
@@ -517,7 +527,7 @@ const HeaderContact = () => {
             >
               {eyeVisibilityById[row.id] ? <FaEyeSlash /> : <FaEye />}
             </Button>
-          </OverlayTrigger>
+          </OverlayTrigger> */}
         </div>
       ),
     },
@@ -563,7 +573,7 @@ const HeaderContact = () => {
     }
 
     if (!formData.description?.trim()) {
-      errors.description = "descriptionription is required";
+      errors.description = "descriptionis required";
       isValid = false;
     }
 
@@ -738,13 +748,13 @@ const HeaderContact = () => {
                       onExport={handleExport}
                       showExportButton={false}
                     />
-                    <Button
+                    {/* <Button
                       variant="outline-success"
                       onClick={handleAdd}
                       className="ms-2 mb-3"
                     >
                       Add
-                    </Button>
+                    </Button> */}
                   </Col>
                 ) : (
                   <Col className="d-flex justify-content-end align-items-center">
@@ -809,16 +819,20 @@ const HeaderContact = () => {
                     </Col>
                     <Col md={6}>
                       <NewResuableForm
-                        label="descriptionription"
-                        placeholder="Enter descriptionription"
+                        label="description"
+                        placeholder="Enter description"
                         name="description"
                         type="text"
                         onChange={handleChange}
                         initialData={formData}
                         textarea
+                        useJodit={true}
                         error={errors.description}
                       />
                     </Col>
+
+
+                    
                   </Row>
                   <Row>
                     <div className="mt-3 d-flex justify-content-end">

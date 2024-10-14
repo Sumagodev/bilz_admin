@@ -60,20 +60,16 @@ const ContactSalesPerson = () => {
     },
   
     {
-      name: <CustomHeader name="Company" />,
+      name: <CustomHeader name="Company Name" />,
       cell: (row) => <span>{row.company}</span>,
     },
     {
-      name: <CustomHeader name="Person Name" />,
-      cell: (row) => <span>{row.person_name}</span>,
+      name: <CustomHeader name="Telephone" />,
+      cell: (row) => <span>{row.phone}</span>,
     },
     {
-      name: <CustomHeader name="Solution" />,
+      name: <CustomHeader name="Salutation" />,
       cell: (row) => <span>{row.solution}</span>,
-    },
-    {
-      name: <CustomHeader name="Surname" />,
-      cell: (row) => <span>{row.surname}</span>,
     },
     {
       name: <CustomHeader name="Street" />,
@@ -81,25 +77,32 @@ const ContactSalesPerson = () => {
     },
     
     {
-      name: <CustomHeader name="Phone Number" />,
-      cell: (row) => <span>{row.phone}</span>,
+      name: <CustomHeader name="Name" />,
+      cell: (row) => <span>{row.person_name}</span>,
     },
+  
     {
-      name: <CustomHeader name="Email" />,
-      cell: (row) => <span>{row.email}</span>,
+      name: <CustomHeader name="Surname" />,
+      cell: (row) => <span>{row.surname}</span>,
     },
     {
       name: <CustomHeader name="Zip" />,
       cell: (row) => <span>{row.zip}</span>,
     },
     {
-      name: <CustomHeader name="Land" />,
-      cell: (row) => <span>{row.land}</span>,
-    },
-    {
       name: <CustomHeader name="Place" />,
       cell: (row) => <span>{row.place}</span>,
     },
+    {
+      name: <CustomHeader name="Email" />,
+      cell: (row) => <span>{row.email}</span>,
+    },
+   
+    {
+      name: <CustomHeader name="Land" />,
+      cell: (row) => <span>{row.land}</span>,
+    },
+   
     {
       name: <CustomHeader name="Msg" />,
       cell: (row) => <span>{row.msg}</span>,
@@ -533,13 +536,13 @@ const ContactSalesPerson = () => {
            
               showExportButton={false} 
             />
-                  <Button
+                  {/* <Button
                     variant="outline-success"
                     onClick={handleAdd}
                     className="ms-2 mb-3"
                   >
                     Add
-                  </Button>
+                  </Button> */}
                 </Col>
               ) : (
                 <Col className="d-flex justify-content-end align-items-center">

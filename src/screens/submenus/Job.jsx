@@ -2,7 +2,8 @@
 
 
 
-////sos final
+///////sos
+////v1 datatable added
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -12,8 +13,10 @@ import {
   Button,
   Form,
   Table,
+  Tooltip, OverlayTrigger,  
 } from "react-bootstrap";
 import DataTable from "react-data-table-component";
+import * as XLSX from "xlsx"; // Import xlsx for exporting
 import { useSearchExport } from "../../context/SearchExportContext";
 import { ShowContext } from "../../context/ShowContext";
 import NewResuableForm from "../../components/form/NewResuableForm";
@@ -25,13 +28,12 @@ import { FaEdit, FaTrash, FaEye, FaEyeSlash } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { ThreeDots  } from 'react-loader-spinner'; 
-import { Tooltip, OverlayTrigger,  } from 'react-bootstrap';
+
 import "../../App.scss";
-const Implemented = () => {
-  // const {  setData, filteredData } =
-  //   useSearchExport();
+const Office = () => {
   const { searchQuery, handleSearch, handleExport, setData, filteredData } =
-    useSearchExport();
+  useSearchExport();
+
   const [team, setTeam] = useState([]);
   const [errors, setErrors] = useState({});
   const [editMode, setEditMode] = useState(false);
@@ -58,67 +60,85 @@ const Implemented = () => {
     },
 
     {
-      name: <CustomHeader name="Title" />,
-      cell: (row) => <span>{row.title}</span>,
+      name: <CustomHeader name="Name" />,
+      cell: (row) => <span>{row.name}</span>,
     },
     {
-      name: <CustomHeader name="Description" />,
-      cell: (row) => <span>{row.desc}</span>,
+      name: <CustomHeader name="Position" />,
+      cell: (row) => <span>{row.position}</span>,
+    },
+    {
+      name: <CustomHeader name="Phone" />,
+      cell: (row) => <span>{row.phone}</span>,
+    },
+    {
+      name: <CustomHeader name="Email" />,
+      cell: (row) => <span>{row.email}</span>,
+    },
+    {
+      name: <CustomHeader name="Message" />,
+      cell: (row) => <span>{row.msg}</span>,
     },
     {
       name: <CustomHeader name="Image" />,
       cell: (row) => (
         <img
           src={row.img}
-          alt="Infrastructure"
+          alt="Event"
           style={{ width: "100px", height: "auto" }}
         />
       ),
     },
     {
-      name: <CustomHeader name="Actions" />,
-      cell: (row) => (
-        <div className="d-flex">
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="edit-tooltip">Edit</Tooltip>}
-          >
-            <Button className="ms-1" onClick={() => toggleEdit(row.id)}>
-              <FaEdit />
-            </Button>
-          </OverlayTrigger>
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="delete-tooltip">Delete</Tooltip>}
-          >
-            <Button
-              className="ms-1"
-              style={{ backgroundColor: "red", color: "white", borderColor: "red" }}
-              onClick={() => handleDelete(row.id)}
-            >
-              <FaTrash />
-            </Button>
-          </OverlayTrigger>
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="visibility-tooltip">{eyeVisibilityById[row.id] ? 'Hide' : 'Show'}</Tooltip>}
-          >
-            <Button
-              className="ms-1"
-              style={{
-                backgroundColor: eyeVisibilityById[row.id] ? 'red' : 'green',
-                borderColor: eyeVisibilityById[row.id] ? 'red' : 'green',
-                color: 'white',
-              }}
-              onClick={() => handleIsActive(row.id, !eyeVisibilityById[row.id])}
-            >
-              {eyeVisibilityById[row.id] ? <FaEyeSlash /> : <FaEye />}
-            </Button>
-          </OverlayTrigger>
-        </div>
-      ),
+      name: <CustomHeader name="Date" />,
+      cell: (row) => {
+        const formattedDate = new Date(row.createdAt).toLocaleDateString();
+        return <span className="d-flex justify-content-center">{formattedDate}</span>;
+      },
     },
-
+{
+  name: <CustomHeader name="Actions" />,
+  cell: (row) => (
+    <div className="d-flex">
+      {/* <OverlayTrigger
+        placement="top"
+        overlay={<Tooltip id="edit-tooltip">Edit</Tooltip>}
+      >
+        <Button className="ms-1" onClick={() => toggleEdit(row.id)}>
+          <FaEdit />
+        </Button>
+      </OverlayTrigger> */}
+      <OverlayTrigger
+        placement="top"
+        overlay={<Tooltip id="delete-tooltip">Delete</Tooltip>}
+      >
+        <Button
+          className="ms-1"
+          style={{ backgroundColor: "red", color: "white", borderColor: "red" }}
+          onClick={() => handleDelete(row.id)}
+        >
+          <FaTrash />
+        </Button>
+      </OverlayTrigger>
+      <OverlayTrigger
+        placement="top"
+        overlay={<Tooltip id="visibility-tooltip">{eyeVisibilityById[row.id] ? 'Hide' : 'Show'}</Tooltip>}
+      >
+        <Button
+          className="ms-1"
+          style={{
+            backgroundColor: eyeVisibilityById[row.id] ? 'red' : 'green',
+            borderColor: eyeVisibilityById[row.id] ? 'red' : 'green',
+            color: 'white',
+          }}
+          onClick={() => handleIsActive(row.id, !eyeVisibilityById[row.id])}
+        >
+          {eyeVisibilityById[row.id] ? <FaEyeSlash /> : <FaEye />}
+        </Button>
+      </OverlayTrigger>
+    </div>
+  ),
+},
  
   ];
 
@@ -153,7 +173,7 @@ const Implemented = () => {
     setLoading(true);
     const accessToken = localStorage.getItem("accessToken"); // Retrieve access token
     try {
-      const response = await instance.get("implemented/find", {
+      const response = await instance.get("job/find", {
         headers: {
           Authorization: "Bearer " + accessToken,
           "Content-Type": "application/json",
@@ -177,29 +197,22 @@ const Implemented = () => {
     let isValid = true;
 
     if (!formData.img) {
-      errors.img = "Image is not 377x241 pixels";
+      errors.img = "Image is required with 710x307 pixels";
       isValid = false;
-    
     } else if (
       formData.img instanceof File &&
       !validateImageSize(formData.img)
     ) {
-      errors.img = "Image is required with 377x241 pixels";
+      errors.img = "Image is not 710x307 pixels";
       isValid = false;
     }
-    if (!formData.title?.trim()) {
-      errors.title = "Title is required";
-      isValid = false;
+    if (!formData.name?.trim()) {
+      errors.name = "name is required";
     }
 
-    if (!formData.desc?.trim()) {
-      errors.desc = "Description is required";
-      isValid = false;
-    } 
-    // else if (formData.desc.length > 1000) {
-    //   errors.desc = "Description must be 1000 characters or less";
-    //   isValid = false;
-    // }
+    if (!formData.position?.trim()) {
+      errors.position = "position is required";
+    }
 
     setErrors(errors);
     return isValid;
@@ -209,18 +222,16 @@ const Implemented = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width === 377 && img.height === 241) {
+        if (img.width === 710 && img.height === 307) {
           resolve();
         } else {
-          reject("Image is required with 377x241 pixels");
+          reject("Image must be 710x307 pixels");
         }
       };
       img.onerror = () => reject("Error loading image");
       img.src = URL.createObjectURL(file);
     });
   };
-
-  
 
   const handleChange = async (name, value) => {
     if (name === "img" && value instanceof File) {
@@ -233,13 +244,9 @@ const Implemented = () => {
         setImagePreview("");
       }
     } else {
-      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+      setFormData({ ...formData, [name]: value });
     }
   };
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -253,7 +260,7 @@ const Implemented = () => {
 
       try {
         if (editMode) {
-          await instance.put(`implemented/update/${editingId}`, data, {
+          await instance.put(`job/update/${editingId}`, data, {
             headers: {
               Authorization: "Bearer " + accessToken,
               "Content-Type": "multipart/form-data",
@@ -265,7 +272,7 @@ const Implemented = () => {
           );
           setTeam(updatedTeam);
         } else {
-          await instance.post("implemented/add", data, {
+          await instance.post("job/add", data, {
             headers: {
               Authorization: "Bearer " + accessToken,
               "Content-Type": "multipart/form-data",
@@ -289,7 +296,7 @@ const Implemented = () => {
 
   const handleDelete = async (id) => {
     confirmAlert({
-      title: "Confirm to delete",
+      name: "Confirm to delete",
       message: "Are you sure you want to delete this data?",
       customUI: ({ onClose }) => (
         <div
@@ -319,7 +326,7 @@ const Implemented = () => {
                 setLoading(true);
                 const accessToken = localStorage.getItem("accessToken");
                 try {
-                  await instance.delete(`implemented/isdelete/${id}`, {
+                  await instance.delete(`job/isdelete/${id}`, {
                     headers: {
                       Authorization: `Bearer ${accessToken}`,
                       "Content-Type": "application/json",
@@ -349,7 +356,7 @@ const Implemented = () => {
 
   const handleIsActive = async (id, isVisible) => {
     confirmAlert({
-      title: "Confirm to change visibility",
+      name: "Confirm to change visibility",
       customUI: ({ onClose }) => (
         <div
           style={{
@@ -381,7 +388,7 @@ const Implemented = () => {
                 const accessToken = localStorage.getItem("accessToken");
                 try {
                   await instance.put(
-                    `implemented/isactive/${id}`,
+                    `job/isactive/${id}`,
                     { isVisible },
                     {
                       headers: {
@@ -437,7 +444,13 @@ const Implemented = () => {
     setEditMode(false);
     setShowTable(true); // Switch to table view
   };
-
+  const exportToExcel = () => {
+    const dataToExport = searchQuery.trim() ? filteredData : team;
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport); // Convert JSON data to worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Team Data"); // Append worksheet to workbook
+    XLSX.writeFile(workbook, "Job.xlsx"); // Download as Excel file
+  };
   return (
   
 
@@ -449,23 +462,25 @@ const Implemented = () => {
             <Row>
               {showTable ? (
                 <Col className="d-flex justify-content-end align-items-center">
-                {/* <SearchInput
+                <SearchInput
               searchQuery={searchQuery}
               onSearch={handleSearch}
-              onExport={handleExport}
-              showExportButton={false}
-            /> */}
-              <SearchInput
-                      searchQuery={searchQuery}
-                      onSearch={handleSearch}
-                      showExportButton={false}
-                    />
-                  <Button
+           
+              showExportButton={false} 
+            />
+                  {/* <Button
                     variant="outline-success"
                     onClick={handleAdd}
                     className="ms-2 mb-3"
                   >
                     Add
+                  </Button> */}
+                   <Button
+                    variant="outline-success"
+                    onClick={exportToExcel} // Trigger Excel export
+                    className="ms-2 mb-3"
+                  >
+                    Export to Excel
                   </Button>
                 </Col>
               ) : (
@@ -503,23 +518,11 @@ const Implemented = () => {
                 onChangeRowsPerPage={(rowsPerPage) =>
                   setRowsPerPage(rowsPerPage)
                 }
-                customStyles={{
-                    rows: {
-                      style: {
-                        alignItems: "flex-start", // Aligns text to the top-left corner
-                      },
-                    },
-                    cells: {
-                      style: {
-                        textAlign: "left", // Ensures text is aligned to the left
-                      },
-                    },
-                  }}
               />
             ) : (
               <Form onSubmit={handleSubmit}>
                 <Row>
-                  <Col md={12}>
+                <Col md={12}>
                     {imagePreview && (
                       <img
                         src={imagePreview}
@@ -532,39 +535,81 @@ const Implemented = () => {
                       />
                     )}
                     <NewResuableForm
-                      label={"Upload Infrastructure Image"}
-                      placeholder={"Upload Image"}
-                      name={"img"}
-                      type={"file"}
-                      onChange={handleChange}
+                      label="Upload job Image"
+                      placeholder="Upload Image"
+                      name="img"
+                      type="file"
+                      onChange={(name, value) => {
+                        const file = value;
+                        if (file) {
+                          handleChange(name, file);
+                        }
+                      }}
                       initialData={formData}
-                      error={errors.img}
-                      imageDimensiion="Image must be 377*241 pixels"
+                      error={errors.img} 
+                      imageDimensiion="Image must be 710*307 pixels" 
                     />
+                 
                   </Col>
                   <Col md={6}>
                     <NewResuableForm
-                      label="Title"
-                      placeholder="Enter Title"
-                      name="title"
+                      label="name"
+                      placeholder="Enter name"
+                      name="name"
                       type="text"
                       onChange={handleChange}
                       initialData={formData}
-                      error={errors.title}
+                      error={errors.name}
                     />
+                  
                   </Col>
                   <Col md={6}>
                     <NewResuableForm
-                      label="Description"
-                      placeholder="Enter description"
-                      name="desc"
+                      label="position"
+                      placeholder="Enter position"
+                      name="position"
                       type="text"
                       onChange={handleChange}
                       initialData={formData}
-                      textarea
-                      error={errors.desc}
-                      // charLimit={1000}
+                      textarea={true}
+                      error={errors.position}
                     />
+                  
+                  </Col>
+                  <Col md={6}>
+                    <NewResuableForm
+                      label="Phone"
+                      placeholder="Enter Phone"
+                      type="number"
+                      name="phone"
+                      onChange={handleChange}
+                      initialData={formData}
+                    />
+                    {/* No validation for phone */}
+                  </Col>
+                  <Col md={6}>
+                    <NewResuableForm
+                      label="Email"
+                      placeholder="Enter Email"
+                      type="email"
+                      name="email"
+                      onChange={handleChange}
+                      initialData={formData}
+                    />
+                    {/* No validation for email */}
+                  </Col>
+                  <Col md={6}>
+                    <NewResuableForm
+                      label="msg"
+                      placeholder="Enter msg"
+                      name="msg"
+                      type="text"
+                      onChange={handleChange}
+                      initialData={formData}
+                      textarea={true}
+                      error={errors.msg}
+                    />
+                  
                   </Col>
                 </Row>
                 <Row>
@@ -587,4 +632,4 @@ const Implemented = () => {
   );
 };
 
-export default Implemented;
+export default Office;

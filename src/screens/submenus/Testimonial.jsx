@@ -52,7 +52,7 @@ const Testimonial = () => {
       cell: (row) => <span>{row.name}</span>,
     },
     {
-      name: <CustomHeader name="Company Name" />,
+      name: <CustomHeader name="Description" />,
       cell: (row) => <span>{row.company_Name ? row.company_Name : "NA"}</span>,
     },
     
@@ -171,7 +171,7 @@ const Testimonial = () => {
     let isValid = true;
 
     if (formData.img && formData.img instanceof File && !validateImageSize(formData.img)) {
-      errors.img = "Image must be 400x400 pixels";
+      errors.img = "Image must be 117x105 pixels";
       isValid = false;
     }
     if (!formData.name?.trim()) {
@@ -193,10 +193,10 @@ const Testimonial = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (img.width === 400 && img.height === 400) {
+        if (img.width === 117 && img.height === 105) {
           resolve();
         } else {
-          reject("Image is required with 400x400 pixels");
+          reject("Image is required with 117x105 pixels");
         }
       };
       img.onerror = () => reject("Error loading image");
@@ -576,7 +576,7 @@ const Testimonial = () => {
                         onChange={handleChange}
                         initialData={formData}
                         error={errors.img}
-                        imageDimensiion="Image must be 400x400 pixels"
+                        imageDimensiion="Image must be 117*105 pixels"
                       />
                     </Col>
                     <Col md={6}>
@@ -590,17 +590,31 @@ const Testimonial = () => {
                         error={errors.name}
                       />
                     </Col>
-                    <Col md={6}>
+                    {/* <Col md={6}>
                       <NewResuableForm
-                        label="Company Name"
-                        placeholder="Enter Company Name"
+                        label="Description"
+                        placeholder="Enter Description"
                         name="company_Name"
                         type="text"
                         onChange={handleChange}
                         initialData={formData}
                         error={errors.company_Name}
                       />
-                    </Col>
+                    </Col> */}
+
+                    <Col md={12}>
+                <NewResuableForm
+                  label="Description"
+                  placeholder="Enter Description"
+                  name="company_Name"
+                  type="text"
+                  onChange={handleChange}
+                  initialData={formData}
+                  textarea
+                  useJodit={true}
+                  error={errors.company_Name}
+                />
+              </Col>
                     
                   </Row>
                   <Row>

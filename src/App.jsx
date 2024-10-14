@@ -54,6 +54,12 @@ import Further_analysis from "./screens/submenus/Further_analysis";
 import ApplicationCategory from "./screens/submenus/ApplicationCategory";
 import PDF from "./screens/submenus/PDF";
 import Implemented from "./screens/submenus/Implemented";
+import ProductData from "./screens/submenus/ProductData";
+import ProductData2 from "./screens/submenus/ProductData2";
+import Job from "./screens/submenus/Job";
+import Distributer from "./screens/submenus/Distributer";
+import Feedback from "./screens/submenus/Feedback";
+import Contact_Form from "./screens/submenus/Contact_form";
 
 function App() {
   return (
@@ -69,6 +75,21 @@ function App() {
           <Route
             path="/dashboard"
             element={<ProtectedRoutes Component={Dashboard} />}
+          />
+            
+            <Route
+            path="/distributer"
+            element={<ProtectedRoutes Component={Distributer} />}
+          />
+            
+            <Route
+            path="/feedback"
+            element={<ProtectedRoutes Component={Feedback} />}
+          />
+            
+            <Route
+            path="/contact_form"
+            element={<ProtectedRoutes Component={Contact_Form} />}
           />
           <Route
             path="/carousal"
@@ -170,6 +191,10 @@ function App() {
             path="/apply_now"
             element={<ProtectedRoutes Component={Office} />}
           />
+            <Route
+            path="/job"
+            element={<ProtectedRoutes Component={Job} />}
+          />
           <Route
             path="/contactperson"
             element={<ProtectedRoutes Component={ContactSalesPerson} />}
@@ -206,6 +231,14 @@ function App() {
           <Route
             path="/productdetails"
             element={<ProtectedRoutes Component={ProductDetails} />}
+          />
+           <Route
+            path="/productdata"
+            element={<ProtectedRoutes Component={ProductData} />}
+          />
+           <Route
+            path="/productdata2"
+            element={<ProtectedRoutes Component={ProductData2} />}
           />
           <Route
             path="/technicaldata"
